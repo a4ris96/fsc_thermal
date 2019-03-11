@@ -1,8 +1,8 @@
 id=fsc_thermal
 name=Custom Thermal Mod for Sony flagships (FSC)
-version=v1.2
-versionCode=120
+version=v1.3
+versionCode=130
 author=korom42
-description=Custom thermal engine for Sony flagships to reduce overheating and achieve a consistent performance.
+description=This module installs a custom thermal engine for Sony flagship devices that aims to reduce overheating and achieve a consistent performance.
 support=
 minMagisk=1530

@@ -43,8 +43,8 @@ chooseportold() {
 
 # GET OLD/NEW FROM ZIP NAME
 case $(echo $(basename $ZIP) | tr '[:upper:]' '[:lower:]') in
-  *harm*) PROFILEMODE=0;;
-  *extrem*) PROFILEMODE=1;;
+  *bal*) PROFILEMODE=0;;
+  *perf*) PROFILEMODE=1;;
 esac
 
 
@@ -86,7 +86,14 @@ if [ $device_check == "akari" ] || [ $device_check == "akari_dsds" ] ; then
   multiprofile=1
 fi
 
-if [ $device_check == "htc_ocnuhl" ] || [ $device_check == "poplar" ] || [ $device_check == "poplar_dsds" ] ; then
+if [ $device_check == "apollo" ] || [ $device_check == "apollo_dsds" ] ; then
+  ui_print "  Xperia XZ2 Compact detected"
+  device="XZ3"
+  support=1
+  multiprofile=1
+fi
+
+if [ $device_check == "poplar" ] || [ $device_check == "poplar_dsds" ] ; then
   ui_print "  Xperia XZ1 detected"
   device="XZ1"
   support=1
@@ -160,12 +167,13 @@ fi
   ui_print "** DISCLAIMER **"
   ui_print " "
   ui_print "   Use at your own risk"
-  ui_print "   I am not responsible for any damage that could happen"
-  ui_print "   Please do some research if you do not know how this mod works"
-  ui_print " "
+  ui_print "   I am not responsible"
+  ui_print "   For any damage that could happen"
+  ui_print "   Please do some research"
+  ui_print "   To know how this mod works"
   ui_print " "
 
-sleep "1"
+sleep "2"
   
 if [ -z $PROFILEMODE ] ; then
 
@@ -220,12 +228,13 @@ if [ -z $PROFILEMODE ] ; then
     ui_print " "
     cp -f "${INSTALLER}/devices/${device}/0/thermal-engine.conf"  "${INSTALLER}/${dir}/thermal-engine.conf"
 	fi
+	fi
+	
+ 	for f in $(find /${INSTALLER} -name 'placeholder'); do rm $f; done
 
-  fi
-  
     ui_print "   Installation was successful !!.."
     ui_print " "
- sleep "0.8"
+ sleep "0.5"
     ui_print "   Enjoy .."
     ui_print " "
- sleep "0.2"
+
