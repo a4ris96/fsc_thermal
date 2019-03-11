@@ -52,16 +52,10 @@ esac
 KEYCHECK=$INSTALLER/common/keycheck
 chmod 755 $KEYCHECK
 
-
-device_check() {
-  if [ "$(grep_prop ro.product.device)" == "$1" ]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-if [ $(grep_prop ro.build.version.sdk) -ge "26" ] ;then
+  device_check=`grep_prop ro.product.device`
+  API=`grep_prop ro.build.version.sdk`
+  
+if [ $API -ge "26" ] ;then
   dir="$VEN/etc"
 else
   dir="$SYS/etc"
@@ -71,88 +65,88 @@ ui_print " "
 support=0
 multiprofile=0
 
-if device_check "akatsuki" || device_check "akatsuki_dsds"; then
+if [ $device_check == "akatsuki" ] || [ $device_check == "akatsuki_dsds" ] ; then
   ui_print "  Xperia XZ3 detected"
   device="XZ3"
   support=1
   multiprofile=1
 fi
 
-if device_check "aurora" || device_check "aurora_dsds"; then
+if [ $device_check == "aurora" ] || [ $device_check == "aurora_dsds" ] ; then
   ui_print "  Xperia XZ2 Premium detected"
   device="XZ3"
   support=1
   multiprofile=1
 fi
 
-if device_check "akari" || device_check "akari_dsds"; then
+if [ $device_check == "akari" ] || [ $device_check == "akari_dsds" ] ; then
   ui_print "  Xperia XZ2 detected"
   device="XZ3"
   support=1
   multiprofile=1
 fi
 
-if device_check "poplar" || device_check "poplar_dsds"; then
+if [ $device_check == "htc_ocnuhl" ] || [ $device_check == "poplar" ] || [ $device_check == "poplar_dsds" ] ; then
   ui_print "  Xperia XZ1 detected"
   device="XZ1"
   support=1
   multiprofile=1
 fi
 
-if device_check "lilac" || device_check "lilac_dsds"; then
+if [ $device_check == "lilac" ] || [ $device_check == "lilac_dsds" ] ; then
   ui_print "  Xperia XZ1 Compact detected"
   device="XZ1"
   support=1
   multiprofile=1
 fi
 
-if device_check "maple" || device_check "maple_dsds"; then
+if [ $device_check == "maple" ] || [ $device_check == "maple_dsds" ] ; then
   ui_print "  Xperia XZ Premium detected"
   device="XZ1"
   support=1
   multiprofile=1
 fi
 
-if device_check "keyaki" || device_check "keyaki_dsds"; then
+if [ $device_check == "keyaki" ] || [ $device_check == "keyaki_dsds" ] ; then
   ui_print "  Xperia XZs detected"
   device="XZ"
   support=1
   multiprofile=1
 fi
 
-if device_check "kagura" || device_check "kagura_dsds"; then
+if [ $device_check == "kagura" ] || [ $device_check == "kagura_dsds" ] ; then
   ui_print "  Xperia XZ detected"
   device="XZ"
   support=1
   multiprofile=1
 fi
 
-if device_check "Dora" || device_check "Dora_dsds"; then
+if [ $device_check == "Dora" ] || [ $device_check == "Dora_dsds" ] ; then
   ui_print "  Xperia X Performance detected"
   device="XZ"
   support=1
   multiprofile=1
 fi
 
-if device_check "satsuki" || device_check "satsuki_dsds"; then
+if [ $device_check == "satsuki" ] || [ $device_check == "satsuki_dsds" ] ; then
   ui_print "  Xperia Z5 Premium detected"
   device="Z5"
   support=1
 fi
 
-if device_check "sumire" || device_check "sumire_dsds"; then
+if [ $device_check == "sumire" ] || [ $device_check == "sumire_dsds" ] ; then
   ui_print "  Xperia Z5 detected"
   device="Z5"
   support=1
 fi
 
-if device_check "suzuran" || device_check "suzuran_dsds"; then
+if [ $device_check == "suzuran" ] || [ $device_check == "suzuran_dsds" ] ; then
   ui_print "  Xperia Z5 Compact detected"
   device="Z5"
   support=1
 fi
 
-if device_check "ivy" || device_check "ivy_dsds"; then
+if [ $device_check == "ivy" ] || [ $device_check == "ivy_dsds" ] ; then
   ui_print "  Xperia Z3+ detected"
   device="Z4"
   support=1
@@ -205,26 +199,33 @@ if [ -z $PROFILEMODE ] ; then
   ui_print "** Please choose tweaks mode **"
   ui_print " "
   ui_print "   Vol(+) = Balanced (Recommended)"
-  ui_print "   Vol(-) = Performance Maximizer"
+  ui_print "   Vol(-) = Performance"
   ui_print " "
   
     if $FUNCTION; then
     PROFILEMODE=0
     ui_print "   Balanced mode selected."
     ui_print " "
-    cp -f $INSTALLER/devices/$device/0/thermal-engine.conf  $INSTALLER/$dir/thermal-engine.conf
+    cp -f "${INSTALLER}/devices/${device}/0/thermal-engine.conf"  "${INSTALLER}/${dir}/thermal-engine.conf"
     else
     PROFILEMODE=1
-    ui_print "   Performance Maximizer mode selected."
+    ui_print "   Performance mode selected."
     ui_print " "
-    cp -f $INSTALLER/devices/$device/1/thermal-engine.conf  $INSTALLER/$dir/thermal-engine.conf
+    cp -f "${INSTALLER}/devices/${device}/1/thermal-engine.conf"  "${INSTALLER}/${dir}/thermal-engine.conf"
     fi
 	
 	else
     PROFILEMODE=0
     ui_print "   Extracting files."
     ui_print " "
-    cp -f $INSTALLER/devices/$device/0/thermal-engine.conf  $INSTALLER/$dir/thermal-engine.conf
+    cp -f "${INSTALLER}/devices/${device}/0/thermal-engine.conf"  "${INSTALLER}/${dir}/thermal-engine.conf"
 	fi
 
   fi
+  
+    ui_print "   Installation was successful !!.."
+    ui_print " "
+ sleep "0.8"
+    ui_print "   Enjoy .."
+    ui_print " "
+ sleep "0.2"
