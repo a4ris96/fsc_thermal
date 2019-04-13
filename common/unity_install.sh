@@ -1,57 +1,3 @@
-
-keytest() {
-  ui_print "** Vol Key Test **"
-  ui_print "** Press Vol UP **"
-  (/system/bin/getevent -lc 1 2>&1 | /system/bin/grep VOLUME | /system/bin/grep " DOWN" > $INSTALLER/events) || return 1
-  return 0
-}
-
-chooseport() {
-  #note from chainfire @xda-developers: getevent behaves weird when piped, and busybox grep likes that even less than toolbox/toybox grep
-  while true; do
-    /system/bin/getevent -lc 1 2>&1 | /system/bin/grep VOLUME | /system/bin/grep " DOWN" > $INSTALLER/events
-    if (`cat $INSTALLER/events 2>/dev/null | /system/bin/grep VOLUME >/dev/null`); then
-      break
-    fi
-  done
-  if (`cat $INSTALLER/events 2>/dev/null | /system/bin/grep VOLUMEUP >/dev/null`); then
-    return 0
-  else
-    return 1
-  fi
-}
-
-chooseportold() {
-  # Calling it first time detects previous input. Calling it second time will do what we want
-  $KEYCHECK
-  $KEYCHECK
-  SEL=$?
-  if [ "$1" == "UP" ]; then
-    UP=$SEL
-  elif [ "$1" == "DOWN" ]; then
-    DOWN=$SEL
-  elif [ $SEL -eq $UP ]; then
-    return 0
-  elif [ $SEL -eq $DOWN ]; then
-    return 1
-  else
-    ui_print "**  Vol key not detected **"
-    abort "** Use name change method in TWRP **"
-  fi
-}
-
-
-# GET OLD/NEW FROM ZIP NAME
-case $(echo $(basename $ZIP) | tr '[:upper:]' '[:lower:]') in
-  *bal*) PROFILEMODE=0;;
-  *perf*) PROFILEMODE=1;;
-esac
-
-
-# Keycheck binary by someone755 @Github, idea for code below by Zappo @xda-developers
-KEYCHECK=$INSTALLER/common/keycheck
-chmod 755 $KEYCHECK
-
   device_check=`grep_prop ro.product.device`
   API=`grep_prop ro.build.version.sdk`
   
@@ -162,8 +108,9 @@ fi
     if [ $support -eq "0" ];then
 	  ui_print "  Your device is not supported"
 	  abort "  Aborting"
-	fi
+    fi
 
+  ui_print " "
   ui_print "** DISCLAIMER **"
   ui_print " "
   ui_print "   Use at your own risk"
@@ -187,18 +134,7 @@ if [ -z $PROFILEMODE ] ; then
   ui_print "........................"
   ui_print " "
   if [ $multiprofile -eq "1" ];then
-  if keytest; then
-    FUNCTION=chooseport
-  else
-    FUNCTION=chooseportold
-    ui_print "** Volume button programming **"
-    ui_print " "
-    ui_print "** Press Vol UP again **"
-    $FUNCTION "UP"
-    ui_print "**  Press Vol DOWN **"
-    $FUNCTION "DOWN"
-  fi
- 
+   
   ui_print "** Choose Thermal tweaks mode **"
   ui_print " "
   ui_print "   1. Balanced"
@@ -210,27 +146,27 @@ if [ -z $PROFILEMODE ] ; then
   ui_print "   Vol(-) = Performance"
   ui_print " "
   
-    if $FUNCTION; then
+    if $VKSEL; then
     PROFILEMODE=0
     ui_print "   Balanced mode selected."
     ui_print " "
-    cp -f "${INSTALLER}/devices/${device}/0/thermal-engine.conf"  "${INSTALLER}/${dir}/thermal-engine.conf"
+    cp -f "${TMPDIR}/devices/${device}/0/thermal-engine.conf"  "${TMPDIR}/${dir}/thermal-engine.conf"
     else
     PROFILEMODE=1
     ui_print "   Performance mode selected."
     ui_print " "
-    cp -f "${INSTALLER}/devices/${device}/1/thermal-engine.conf"  "${INSTALLER}/${dir}/thermal-engine.conf"
+    cp -f "${TMPDIR}/devices/${device}/1/thermal-engine.conf"  "${TMPDIR}/${dir}/thermal-engine.conf"
     fi
 	
 	else
     PROFILEMODE=0
     ui_print "   Extracting files."
     ui_print " "
-    cp -f "${INSTALLER}/devices/${device}/0/thermal-engine.conf"  "${INSTALLER}/${dir}/thermal-engine.conf"
+    cp -f "${TMPDIR}/devices/${device}/0/thermal-engine.conf"  "${TMPDIR}/${dir}/thermal-engine.conf"
 	fi
 	fi
 	
- 	for f in $(find /${INSTALLER} -name 'placeholder'); do rm $f; done
+ 	for f in $(find /${TMPDIR} -name 'placeholder'); do rm $f; done
 
     ui_print "   Installation was successful !!.."
     ui_print " "
