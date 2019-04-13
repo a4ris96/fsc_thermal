@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-</a> <img src="https://img.shields.io/badge/Version-1.3-lightgrey.svg?style=flat-square"></a> <img src="https://img.shields.io/badge/Updated-March%2011%2C%202019-brightgreen.svg?style=flat-square"></a> <a href="https://forum.xda-developers.com/crossdevice-dev/sony/z3-z4-z5-fsc-improve-performance-t3673785"><img src="https://img.shields.io/badge/XDA-Thread-orange.svg?style=flat-square"></a> <a href="https://t.me/FSC_XDA"><img src="https://img.shields.io/badge/Telegram-Channel-blue.svg?style=flat-square"></a>
+</a> <img src="https://img.shields.io/badge/Version-1.4-lightgrey.svg?style=flat-square"></a> <img src="https://img.shields.io/badge/Updated-April%2014%2C%202019-brightgreen.svg?style=flat-square"></a> <a href="https://forum.xda-developers.com/crossdevice-dev/sony/z3-z4-z5-fsc-improve-performance-t3673785"><img src="https://img.shields.io/badge/XDA-Thread-orange.svg?style=flat-square"></a> <a href="https://t.me/FSC_XDA"><img src="https://img.shields.io/badge/Telegram-Channel-blue.svg?style=flat-square"></a>
 </p>
 
 
